@@ -7,6 +7,7 @@ import (
 
 type Message struct {
     Type int
+    data string
 }
 
 func RunChannel() *chan int{
@@ -24,7 +25,7 @@ func RunChannel() *chan int{
     go func() {
         for {
             msg := <-srv_netchan
-            fmt.Printf("Received message, type = %d\n", msg.Type)
+            fmt.Printf("Received message from master, type = %d\n", msg.Type)
             msg_resp := Message{10}
             srv_netchan <- msg_resp
 
@@ -34,8 +35,7 @@ func RunChannel() *chan int{
 }
 
 func main() {
-    fmt.Println("lightci worker")
+    fmt.Println("lightci slave")
     s := RunChannel()
     <-*s
-
 }
